@@ -13,7 +13,10 @@ spring:
       enabled: true
     livereload:
       enabled: true
-
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
 mybatis:
   typeAliasesPackage: com.lianglianglee.cloud.user.entity
   mapperLocations: classpath:mapper/*.xml
