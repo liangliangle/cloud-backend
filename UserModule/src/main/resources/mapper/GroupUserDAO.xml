@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglianglee.cloud.user.com.lianglianglee.cloud.edit.dao.GroupUserDAO">
+  <resultMap id="BaseResultMap" type="com.lianglianglee.cloud.user.entity.GroupUserEntity">
+    <id column="Id" jdbcType="BIGINT" property="id"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+    <result column="group_id" jdbcType="BIGINT" property="groupId"/>
+    <result column="type" jdbcType="VARCHAR" property="type"/>
+    <result column="status" jdbcType="INTEGER" property="status"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    Id, create_time, last_update_time, user_id,user_name, group_id, type, status
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_group_user
+    where Id = #{id,jdbcType=BIGINT} and status=1
+  </select>
+  <select id="getByGroupId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_group_user
+    where group_id = #{groupId,jdbcType=BIGINT} and status=1
+  </select>
+
+  <select id="getByUserIdAndGroupId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_group_user
+    where group_id = #{groupId,jdbcType=BIGINT} and user_id=#{userId}
+  </select>
+  <update id="deleteById" parameterType="java.lang.Long">
+    update u_group_user set status=0
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.lianglianglee.cloud.user.entity.GroupUserEntity"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into u_group_user (create_time, last_update_time,
+      user_id,user_name, group_id, type,
+      status)
+    values ( #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},#{groupId,jdbcType=BIGINT},
+      #{type,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateById" parameterType="com.lianglianglee.cloud.user.entity.GroupUserEntity">
+    update u_group_user
+    set last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_nam=#{userName,jdbcType=VARCHAR}，
+      group_id = #{groupId,jdbcType=BIGINT},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

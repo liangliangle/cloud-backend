@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglianglee.edit.dao.EditInfoDAO">
+    <resultMap id="BaseResultMap" type="com.lianglianglee.cloud.edit.entity.EditInfoEntity">
+        <id column="Id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="edit_id" jdbcType="BIGINT" property="editId"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="info" jdbcType="LONGVARCHAR" property="info"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    Id, create_time, last_update_time, edit_id, type, status, info
+  </sql>
+    <select id="getByEditId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from e_edit_info
+        where edit_id = #{id,jdbcType=BIGINT} and status=1
+    </select>
+    <select id="getAllByEditId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from e_edit_info
+        where edit_id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from e_edit_info
+        where Id = #{id,jdbcType=BIGINT}
+    </select>
+    <update id="deleteById" parameterType="java.lang.Long">
+    update e_edit_info set status=0
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="deleteByEditId" parameterType="java.lang.Long">
+    update e_edit_info set status=0
+    where edit_id = #{editId,jdbcType=BIGINT} and status =1
+  </update>
+
+    <insert id="insert" parameterType="com.lianglianglee.cloud.edit.entity.EditInfoEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into e_edit_info ( create_time, last_update_time,
+      edit_id, type, status, 
+      info)
+    values ( #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{editId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{info,jdbcType=LONGVARCHAR})
+  </insert>
+    <update id="updateById" parameterType="com.lianglianglee.cloud.edit.entity.EditInfoEntity">
+    update e_edit_info
+    set
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      edit_id = #{editId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      info=#{info}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

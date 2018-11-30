@@ -2,7 +2,7 @@ server:
   port: 3055
 spring:
   application:
-    name: user-server
+    name: edit-server
   datasource:
     url: jdbc:mysql://localhost:3306/cloud_edit?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&useSSL=false&allowPublicKeyRetrieval=true
     username: root

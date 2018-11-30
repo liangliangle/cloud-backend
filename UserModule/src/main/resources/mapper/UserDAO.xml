@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglianglee.cloud.user.com.lianglianglee.cloud.edit.dao.UserDAO">
+  <resultMap id="BaseResultMap" type="com.lianglianglee.cloud.user.entity.UserEntity">
+    <id column="Id" jdbcType="BIGINT" property="id"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    <result column="name" property="name"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+    <result column="password" jdbcType="VARCHAR" property="password"/>
+    <result column="secret" jdbcType="VARCHAR" property="secret"/>
+    <result column="status" jdbcType="INTEGER" property="status"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    Id, create_time, last_update_time, name, email, phone, secret,password, status
+  </sql>
+  <select id="selectByUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>,password
+    from u_user
+    where (phone = #{username,javaType=String} or email = #{username,javaType=String} )and status =1
+  </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_user
+    where Id = #{id,jdbcType=BIGINT}
+
+  </select>
+
+  <select id="countByPhoneOrEmail" resultType="int">
+        select count(*) from u_user where phone=#{phone} or email=#{email}
+    </select>
+  <update id="deleteById" parameterType="java.lang.Long">
+    update  u_user set  status=0
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.lianglianglee.cloud.user.entity.UserEntity" useGeneratedKeys="true"
+          keyProperty="id">
+    insert into u_user ( create_time, last_update_time,
+      name, email, phone, 
+      password, secret, status)
+    values ( #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateById" parameterType="com.lianglianglee.cloud.user.entity.UserEntity">
+    update u_user
+    set  last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      secret = #{secret,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

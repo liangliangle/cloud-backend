@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lianglianglee.cloud.user.com.lianglianglee.cloud.edit.dao.GroupDAO">
+  <resultMap id="BaseResultMap" type="com.lianglianglee.cloud.user.entity.GroupEntity">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="type" jdbcType="VARCHAR" property="type"/>
+    <result column="user_id" jdbcType="BIGINT" property="userId"/>
+    <result column="status" jdbcType="INTEGER" property="status"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_group.id, u_group.create_time, u_group.last_update_time, u_group.name, u_group.type,
+    u_group.user_id, u_group.status
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_group
+    where id = #{id,jdbcType=BIGINT} and status=1
+  </select>
+
+
+  <select id="getByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from u_group left join u_group_user on u_group.id = u_group_user.group_id
+    where u_group_user.user_id = #{userId,jdbcType=BIGINT} and u_group_user.status=1 and
+    u_group.status=1
+  </select>
+  <update id="deleteById" parameterType="java.lang.Long">
+    update  u_group set status=0
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="GroupEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into u_group ( create_time, last_update_time,
+      `name`, `type`, user_id, 
+      `status`)
+    values ( #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateTime,jdbcType=TIMESTAMP},
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateById" parameterType="GroupEntity">
+    update u_group
+    set last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
