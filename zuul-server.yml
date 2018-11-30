@@ -27,7 +27,7 @@ zuul:
     user:
       path: /api/user/**
       stripPrefix: false
-      serviceId: esit-server
+      serviceId: user-server
     edit:
       path: /api/edit/**
       stripPrefix: false
