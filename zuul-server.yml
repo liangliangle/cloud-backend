@@ -22,8 +22,8 @@ zuul:
     socket-timeout-millis: 300000
   semaphore:
     maxSemaphores: 1000
-  routes:
   add-host-header: true
+  routes:
     user:
       path: /api/user/**
       stripPrefix: false
