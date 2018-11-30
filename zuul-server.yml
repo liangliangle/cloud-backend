@@ -1,0 +1,34 @@
+spring:
+  application:
+    name:  zuul-server
+server:
+  port: 10002
+logging:
+  file: log.log
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
+
+zuul:
+  SendErrorFilter:
+    post:
+      disable: true
+  host:
+    socket-timeout-millis: 300000
+  semaphore:
+    maxSemaphores: 1000
+  routes:
+  add-host-header: true
+    user:
+      path: /api/user/**
+      stripPrefix: false
+      serviceId: esit-server
+    edit:
+      path: /api/edit/**
+      stripPrefix: false
+      serviceId: edit-server
