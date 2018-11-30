@@ -3,29 +3,22 @@ spring:
     name:  zuul-server
 server:
   port: 10002
-logging:
-  file: log.log
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 ribbon:
   ReadTimeout: 300000
   ConnectTimeout: 300000
-
 zuul:
-  SendErrorFilter:
-    post:
-      disable: true
-  host:
-    socket-timeout-millis: 300000
-  semaphore:
-    maxSemaphores: 1000
-  add-host-header: true
+  sensitiveHeaders: ''
   routes:
     user:
       path: /api/user/**
+      stripPrefix: false
+      serviceId: user-server
+    group:
+      path: /api/group/**
       stripPrefix: false
       serviceId: user-server
     edit:
