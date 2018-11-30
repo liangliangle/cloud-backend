@@ -1,0 +1,24 @@
+server:
+  port: 3055
+spring:
+  application:
+    name: user-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud_edit?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+mybatis:
+  typeAliasesPackage: com.lianglianglee.cloud.edit.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    use-generated-keys: true
