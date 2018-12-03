@@ -112,11 +112,6 @@
       <artifactId>commons-lang3</artifactId>
       <version>${commons-lang3.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.lianglianglee</groupId>
-      <artifactId>OssModule</artifactId>
-      <version>0.0.1</version>
-    </dependency>
 
 
     <dependency>
