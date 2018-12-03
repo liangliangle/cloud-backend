@@ -115,7 +115,7 @@ public class UserService {
     entity.buildDefaultLastTime();
     userDAO.updateById(entity);
     String url = GoogleAuthenticator.getUrl(entity.getSecret(), entity.getName());
-    return Qrcode.getCodeString(entity.getSecret());
+    return Qrcode.getCodeString(url);
   }
 
 

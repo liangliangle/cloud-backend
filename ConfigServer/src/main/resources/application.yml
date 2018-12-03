@@ -13,7 +13,7 @@ spring:
         config:
             server:
                 jdbc:
-                    sql: SELECT _key, _value from PROPERTIES where APPLICATION=? and PROFILE=?   and LABEL=?
+                    sql: SELECT _key, _value from config_properties where application=? and profile=?   and label=?
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: root
