@@ -1,4 +1,4 @@
- FROM openjdk
+ FROM open-jre-8
  ADD ./target/backend-UserServer-1.0.0.jar app.jar
  EXPOSE 3055
  RUN bash -c 'touch /app.jar'

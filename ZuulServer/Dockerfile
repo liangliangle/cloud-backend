@@ -1,4 +1,4 @@
- FROM openjdk
+ FROM open-jre-8
  ADD ./target/backend-ZuulServer-1.0.0.jar app.jar
  EXPOSE 10002
  RUN bash -c 'touch /app.jar'

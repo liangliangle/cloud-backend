@@ -19,16 +19,16 @@ public class PropertiesTest {
       String url = "jdbc:mysql://localhost:3306/cloud_edit?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong&useSSL=false&allowPublicKeyRetrieval=true";
       conn = DriverManager.getConnection(url, "root", "root");
       Properties properties = new Properties();
-      properties.load(new FileInputStream("C:\\Project\\My Project\\edit-server.properties"));
+      properties.load(new FileInputStream("D:\\My Project\\config.properties"));
       Set<String> keys = properties.stringPropertyNames();
       for (String key : keys) {
-        String sql = "insert into properties (" +
-          "`key`,\n" +
-          "`value`,\n" +
+        String sql = "insert into config_properties (" +
+          "`_key`,\n" +
+          "`_value`,\n" +
           "application,\n" +
           "`profile`,\n" +
           "label\n" +
-          ") values( ?, ?, 'zuul-server', 'default', 'master')";
+          ") values( ?, ?, 'eureka-server', 'prod', 'master')";
         PreparedStatement pre = conn.prepareStatement(sql);
         pre.setObject(1, key);
         pre.setObject(2, properties.getProperty(key));

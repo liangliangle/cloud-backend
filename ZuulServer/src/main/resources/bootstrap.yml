@@ -6,6 +6,5 @@ spring:
       uri: http://localhost:1201/
       profile: default
       label: master
-
 server:
   port: 1205
